@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html><head><style>table{width:100%!important;margin:auto;}</style>
+<meta charset="utf-8">
+<title>SALA DE INFORMÁTICA - SAI</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<style>
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; background:#f0f4fa; margin:0; padding:0; color:#333; }
+    header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;
+             background: linear-gradient(90deg,#003366,#00509e); color:white; padding:16px 20px; box-shadow:0 2px 6px rgba(0,0,0,0.2); }
+    header h1 { margin:0; font-size:22px; }
+    header .meta { font-size:12px; opacity:.9; }
+    header .acoes { display:flex; gap:8px; flex-wrap:wrap; }
+    .btn { border:0; border-radius:10px; padding:10px 14px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.15); font-weight:600; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-salvar { background:#00b894; color:#fff; }
+    .btn-limpar { background:#d63031; color:#fff; }
+    main { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:20px; padding:20px; max-width:1200px; margin:auto; }
+    .card { background:white; border-radius:10px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); transition: transform .2s; }
+    .card:hover { transform: translateY(-3px); }
+    .card h2 { font-size:20px; margin:0 0 15px; color:#003366; display:flex; align-items:center; gap:10px; border-bottom:2px solid #00509e; padding-bottom:5px; }
+    .card h2 i { font-size:22px; color:#00509e; }
+    ul { list-style:none; padding:0; margin:0; }
+    li { margin:6px 0; }
+    input[type=number]{ width:80px; padding:6px 8px; border:1px solid #ccc; border-radius:6px; }
+    input[readonly]{ background:#f3f6fa; cursor:default; }
+    .observacao { background:#e6f0ff; padding:12px; border-radius:6px; margin-top:12px; font-style:italic; font-size:14px; }
+    footer { background:#003366; color:white; text-align:center; margin-top:30px; padding:20px; }
+    footer img { width:240px; height:auto; display:block; margin:0 auto 10px; border-radius:6px; }
+    footer p { margin:0; font-size:13px; opacity:.9; }
+
+@media print {
+  .acoes, .btn { display: none !important; }
+  input[type=number] {
+    border: none !important;
+    background: transparent !important;
+    pointer-events: none !important;
+    width: auto !important;
+    font: inherit;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    appearance: none;
+  }
+  body { background: #fff !important; color: #000 !important; }
+  .card { box-shadow: none !important; border: 1px solid #ccc; }
+  header, footer { box-shadow: none !important; background: #fff !important; color: #000 !important; }
+  header h1 { color: #000 !important; }
+  .card h2 { border-color: #000 !important; color: #000 !important; }
+}
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+</style>
+</head>
+
+<body>
+<header>
+<div>
+<h1>SALA DE INFORMÁTICA - SAI</h1>
+<div class="meta">Atualizado em: <span id="data-atualizacao">04/12/2025</span></div>
+</div>
+<div class="acoes">
+<button class="btn btn-salvar" id="btnPDF"><i class="fa-solid fa-file-pdf"></i> Baixar PDF</button>
+<button class="btn btn-salvar" id="btnBaixar"><i class="fa-solid fa-download"></i> Baixar HTML com dados</button>
+<button class="btn btn-salvar" id="btnBaixarTotal"><i class="fa-solid fa-file-arrow-down"></i> Baixar Total (TXT)</button>
+<button class="btn btn-limpar" id="btnLimpar"><i class="fa-solid fa-broom"></i> Limpar dados salvos</button>
+</div>
+</header>
+
+<main>
+<div class="card">
+<h2><i class="fas fa-chromebook"></i> Chromebooks</h2>
+<ul>
+<li>Total: <input id="chromebookTotal" min="0" type="number" value="40"> unidades</li>
+<li>Em uso: <input id="chromebookUso" min="0" type="number" value="32"> unidades</li>
+<li>Defeituosos: <input id="chromebookDefeito" min="0" type="number" value="08"> unidades</li>
+<li>Plataforma: <input id="chromebookPlataforma" min="0" type="number" value="4"></li>
+</ul>
+</div>
+
+<div class="card">
+<h2><i class="fas fa-tablet-alt"></i> Tablets</h2>
+<ul>
+<li>Total: <input id="tabletTotal" min="0" type="number" value="35"> unidades</li>
+<li>Em uso: <input id="tabletUso" min="0" type="number" value="23"> unidades</li>
+<li>Defeituosos: <input id="tabletDefeito" min="0" type="number" value="12"> unidades</li>
+<li>Plataforma: <input id="tabletPlataforma" min="0" type="number" value="2"></li>
+</ul>
+</div>
+
+<div class="card">
+<h2><i class="fas fa-laptop"></i> Notebooks</h2>
+<ul>
+<li>Total: <input id="notebookTotal" min="0" type="number" value="96"> unidades</li>
+<li>Em uso: <input id="notebookUso" min="0" type="number" value="75"> unidades</li>
+<li>Plataforma 01: <input id="notebookPlataforma01" min="0" type="number" value="38"> unidades</li>
+<li>P02 Em manut: <input id="notebookPlataforma02" min="0" type="number" value="00"> unidades</li>
+<li>Plataforma 03: <input id="notebookPlataforma03" min="0" type="number" value="37"> unidades</li>
+<li>Positivos em mau uso: <input id="notebookMauUso" min="0" type="number" value="19"> unidades</li>
+
+<li>Formatação D.E: <input id="notebookFormatacaoDE" min="0" type="number" value="2"> unidades</li>
+<li>Chamados Abertos P02: <input id="notebookChamadosAbertos" min="0" type="number" value="00"> unidades</li>
+
+</ul>
+</div>
+
+<div class="card">
+<h2><i class="fas fa-desktop"></i> Desktops (Sala SAI)</h2>
+<ul>
+<li>Total: <input id="desktopTotal" min="0" type="number" value="43"> unidades</li>
+<li>Gestão Coordenação: <input id="desktopGestao" min="0" type="number" value="9"></li>
+<li>Em uso: <input id="desktopUso" min="0" type="number" value="26"> unidades SAI</li>
+<li>Em manutenção: <input id="desktopManutencao" min="0" type="number" value="3"> unidades SAI</li>
+<li>Fora de uso: <input id="desktopFora" min="0" type="number" value="5"></li>
+</ul>
+</div>
+
+<div class="card">
+<h2><i class="fas fa-layer-group"></i> Total Geral</h2>
+<ul>
+<li>Total em uso (Chromebooks + Notebooks + Desktops): 
+  <input id="totalEmUso" type="number" readonly="" value="133"> unidades</li>
+</ul>
+<div class="observacao">O campo "Total em uso" é calculado automaticamente e salvo no navegador.</div>
+</div>
+
+<div class="card">
+<h2><i class="fas fa-user-check"></i> Responsável</h2>
+<p>PROATI: <b>Gil</b></p>
+</div>
+
+<div class="card">
+<h2><i class="fas fa-lock"></i> Acesso Login Automático</h2>
+<p>
+<a class="btn btn-salvar" href="#login-automatico"><i class="fa-solid fa-right-to-bracket"></i> Abrir Login</a>
+</p>
+</div>
+</main>
+
+<footer>
+<img alt="TI" src="https://i.postimg.cc/rFwd2NDd/assinatura-Microsoft.jpg">
+<p>© 2025 Sistema de Gestão de Equipamentos Escolares</p>
+</footer>
+
+<script>
+const hoje = new Date();
+document.getElementById('data-atualizacao').textContent = hoje.toLocaleDateString('pt-BR');
+
+const campos = [
+  "chromebookTotal","chromebookUso","chromebookDefeito","chromebookPlataforma",
+  "tabletTotal","tabletUso","tabletDefeito","tabletPlataforma",
+  "notebookTotal","notebookUso","notebookPlataforma01","notebookPlataforma02",
+  "notebookPlataforma03","notebookMauUso",
+  "notebookFormatacaoDE","notebookChamadosAbertos",
+  "desktopTotal","desktopGestao","desktopUso","desktopManutencao","desktopFora",
+  "totalEmUso" // adicionamos o total geral ao array de campos salvos
+];
+
+function getNumberValue(id){
+  const el = document.getElementById(id);
+  if(!el) return 0;
+  const v = parseInt(el.value, 10);
+  return Number.isFinite(v) ? v : 0;
+}
+
+function calcularTotalEmUso(){
+  // soma apenas os campos "em uso" relevantes: chromebookUso, notebookUso, desktopUso
+  const soma = getNumberValue('chromebookUso') + getNumberValue('notebookUso') + getNumberValue('desktopUso');
+  const totalEl = document.getElementById('totalEmUso');
+  if(totalEl){
+    totalEl.value = String(soma);
+    localStorage.setItem('totalEmUso', String(soma));
+  }
+}
+
+// iniciar valores e listeners
+campos.forEach(id=>{
+  const input=document.getElementById(id);
+  const salvo = localStorage.getItem(id);
+  if(salvo !== null && input){
+    input.value = salvo;
+  }
+  if(input && id !== 'totalEmUso'){ // totalEmUso é calculado automaticamente
+    input.addEventListener("input",()=>{
+      localStorage.setItem(id,input.value);
+      // quando os campos de "uso" mudam, recalcula o total
+      if(['chromebookUso','notebookUso','desktopUso'].includes(id)){
+        calcularTotalEmUso();
+      }
+    });
+  }
+});
+
+// calcular total na carga inicial (caso os campos tenham sido restaurados)
+calcularTotalEmUso();
+
+document.getElementById("btnLimpar").addEventListener("click", ()=>{
+  if(confirm("Apagar todos os números salvos neste navegador?")){
+    campos.forEach(id=> localStorage.removeItem(id));
+    location.reload();
+  }
+});
+
+document.getElementById("btnBaixar").addEventListener("click", ()=>{
+  const valores = {};
+  campos.forEach(id=> {
+    const el = document.getElementById(id);
+    valores[id] = el ? el.value : "";
+  });
+
+  const clone = document.documentElement.cloneNode(true);
+
+  clone.querySelector("#data-atualizacao").textContent =
+    new Date().toLocaleDateString('pt-BR');
+
+  Object.entries(valores).forEach(([id, val])=>{
+    const el = clone.querySelector("#"+id);
+    if(el) el.setAttribute("value", String(val));
+  });
+
+  const seedScript = document.createElement("script");
+  seedScript.textContent = `
+    (function(){
+      const dados=${JSON.stringify(valores)};
+      Object.keys(dados).forEach(k=> localStorage.setItem(k, dados[k]));
+      Object.keys(dados).forEach(k=>{ const i=document.getElementById(k); if(i) i.value=dados[k]; });
+      const el=document.getElementById('data-atualizacao');
+      if(el) el.textContent = new Date().toLocaleDateString('pt-BR');
+    })();
+  `;
+  seedScript.setAttribute("data-seed","1");
+  clone.querySelector("body").appendChild(seedScript);
+
+  const htmlFinal = "<!DOCTYPE html>\n" + clone.outerHTML;
+  const blob = new Blob([htmlFinal], {type: "text/html;charset=utf-8"});
+  const nome = "SAI_salvo_" + new Date().toISOString().slice(0,10) + ".html";
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = nome;
+  document.body.appendChild(link);
+  link.click();
+  setTimeout(()=>{
+    URL.revokeObjectURL(link.href);
+    document.body.removeChild(link);
+  }, 1000);
+});
+
+document.getElementById("btnBaixarTotal").addEventListener("click", ()=>{
+  const total = document.getElementById('totalEmUso') ? document.getElementById('totalEmUso').value : '';
+  const conteudo = `Total em uso (Chromebooks + Notebooks + Desktops): ${total}\nGerado em: ${new Date().toLocaleString()}`;
+  const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+  const nome = "SAI_total_em_uso_" + new Date().toISOString().slice(0,10) + ".txt";
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = nome;
+  document.body.appendChild(link);
+  link.click();
+  setTimeout(()=>{
+    URL.revokeObjectURL(link.href);
+    document.body.removeChild(link);
+  }, 1000);
+});
+
+document.getElementById("btnPDF")?.addEventListener("click", ()=>{
+  const oldTitle = document.title;
+  const data = new Date().toISOString().slice(0,10);
+  document.title = "SAI_" + data + "_relatorio";
+  window.print();
+  setTimeout(()=>{ document.title = oldTitle; }, 500);
+});
+</script>
+
+<!-- SCRIPTS DE SEMENTE (mantidos para popular localStorage com exemplos se necessário) -->
+<script data-seed="1">
+    (function(){
+      const dados={"chromebookTotal":"40","chromebookUso":"30","chromebookDefeito":"10","chromebookPlataforma":"4","tabletTotal":"35","tabletUso":"23","tabletDefeito":"12","tabletPlataforma":"2","notebookTotal":"96","notebookUso":"73","notebookPlataforma01":"38","notebookPlataforma02":"02","notebookPlataforma03":"35","notebookMauUso":"19","notebookFormatacaoDE":"00","notebookChamadosAbertos":"02","desktopTotal":"43","desktopGestao":"9","desktopUso":"26","desktopManutencao":"3","desktopFora":"5"};
+      Object.keys(dados).forEach(k=> localStorage.setItem(k, dados[k]));
+      Object.keys(dados).forEach(k=>{ const i=document.getElementById(k); if(i) i.value=dados[k]; });
+      const el=document.getElementById('data-atualizacao');
+      if(el) el.textContent = new Date().toLocaleDateString('pt-BR');
+      // calcula total inicial
+      const soma = Number(dados.chromebookUso||0) + Number(dados.notebookUso||0) + Number(dados.desktopUso||0);
+      localStorage.setItem('totalEmUso', String(soma));
+      const totalEl = document.getElementById('totalEmUso');
+      if(totalEl) totalEl.value = String(soma);
+    })();
+</script>
+
+
+<script data-seed="1">
+    (function(){
+      const dados={"chromebookTotal":"40","chromebookUso":"30","chromebookDefeito":"10","chromebookPlataforma":"4","tabletTotal":"35","tabletUso":"23","tabletDefeito":"12","tabletPlataforma":"2","notebookTotal":"96","notebookUso":"73","notebookPlataforma01":"38","notebookPlataforma02":"02","notebookPlataforma03":"35","notebookMauUso":"19","notebookFormatacaoDE":"00","notebookChamadosAbertos":"02","desktopTotal":"43","desktopGestao":"9","desktopUso":"26","desktopManutencao":"3","desktopFora":"5","totalEmUso":"129"};
+      Object.keys(dados).forEach(k=> localStorage.setItem(k, dados[k]));
+      Object.keys(dados).forEach(k=>{ const i=document.getElementById(k); if(i) i.value=dados[k]; });
+      const el=document.getElementById('data-atualizacao');
+      if(el) el.textContent = new Date().toLocaleDateString('pt-BR');
+    })();
+  </script><script data-seed="1">
+    (function(){
+      const dados={"chromebookTotal":"40","chromebookUso":"30","chromebookDefeito":"10","chromebookPlataforma":"4","tabletTotal":"35","tabletUso":"23","tabletDefeito":"12","tabletPlataforma":"2","notebookTotal":"96","notebookUso":"76","notebookPlataforma01":"38","notebookPlataforma02":"00","notebookPlataforma03":"38","notebookMauUso":"19","notebookFormatacaoDE":"1","notebookChamadosAbertos":"00","desktopTotal":"43","desktopGestao":"9","desktopUso":"26","desktopManutencao":"3","desktopFora":"5","totalEmUso":"132"};
+      Object.keys(dados).forEach(k=> localStorage.setItem(k, dados[k]));
+      Object.keys(dados).forEach(k=>{ const i=document.getElementById(k); if(i) i.value=dados[k]; });
+      const el=document.getElementById('data-atualizacao');
+      if(el) el.textContent = new Date().toLocaleDateString('pt-BR');
+    })();
+  </script><script data-seed="1">
+    (function(){
+      const dados={"chromebookTotal":"40","chromebookUso":"32","chromebookDefeito":"08","chromebookPlataforma":"4","tabletTotal":"35","tabletUso":"23","tabletDefeito":"12","tabletPlataforma":"2","notebookTotal":"96","notebookUso":"76","notebookPlataforma01":"38","notebookPlataforma02":"00","notebookPlataforma03":"38","notebookMauUso":"19","notebookFormatacaoDE":"1","notebookChamadosAbertos":"00","desktopTotal":"43","desktopGestao":"9","desktopUso":"26","desktopManutencao":"3","desktopFora":"5","totalEmUso":"134"};
+      Object.keys(dados).forEach(k=> localStorage.setItem(k, dados[k]));
+      Object.keys(dados).forEach(k=>{ const i=document.getElementById(k); if(i) i.value=dados[k]; });
+      const el=document.getElementById('data-atualizacao');
+      if(el) el.textContent = new Date().toLocaleDateString('pt-BR');
+    })();
+  </script><script data-seed="1">
+    (function(){
+      const dados={"chromebookTotal":"40","chromebookUso":"32","chromebookDefeito":"08","chromebookPlataforma":"4","tabletTotal":"35","tabletUso":"23","tabletDefeito":"12","tabletPlataforma":"2","notebookTotal":"96","notebookUso":"75","notebookPlataforma01":"38","notebookPlataforma02":"00","notebookPlataforma03":"37","notebookMauUso":"19","notebookFormatacaoDE":"2","notebookChamadosAbertos":"00","desktopTotal":"43","desktopGestao":"9","desktopUso":"26","desktopManutencao":"3","desktopFora":"5","totalEmUso":"133"};
+      Object.keys(dados).forEach(k=> localStorage.setItem(k, dados[k]));
+      Object.keys(dados).forEach(k=>{ const i=document.getElementById(k); if(i) i.value=dados[k]; });
+      const el=document.getElementById('data-atualizacao');
+      if(el) el.textContent = new Date().toLocaleDateString('pt-BR');
+    })();
+  </script></body></html>
